@@ -1,5 +1,6 @@
 import tkinter as tk
 import conexion_bd
+import tkinter.messagebox as messagebox
 
 def ventana_eliminacion():
     # Conectar a la base de datos
@@ -45,13 +46,17 @@ def ventana_eliminacion():
         entrada_id.pack()
 
         def eliminar_registro():
-            id = int(entrada_id.get())
-            consulta = "DELETE FROM tipo_cabanya WHERE id = %s"
-            valores = (id,)
-            cursor.execute(consulta, valores)
-            conexion.commit()
-            ventana_eliminar.destroy()
-            tk.messagebox.showinfo("Éxito", "Registro eliminado correctamente.")
+            id = entrada_id.get()
+            if id.isdigit():
+                id = int(id)
+                consulta = "DELETE FROM tipo_cabanya WHERE id = %s"
+                valores = (id,)
+                cursor.execute(consulta, valores)
+                conexion.commit()
+                ventana_eliminar.destroy()
+                messagebox.showinfo("Éxito", "Registro eliminado correctamente.")
+            else:
+                messagebox.showerror("Error", "El ID debe ser un valor numérico.")
 
         boton_eliminar = tk.Button(ventana_eliminar, text="Eliminar", command=eliminar_registro)
         boton_eliminar.pack()
@@ -69,13 +74,17 @@ def ventana_eliminacion():
         entrada_id.pack()
 
         def eliminar_registro():
-            id = int(entrada_id.get())
-            consulta = "DELETE FROM cabanyas WHERE id = %s"
-            valores = (id,)
-            cursor.execute(consulta, valores)
-            conexion.commit()
-            ventana_eliminar.destroy()
-            tk.messagebox.showinfo("Éxito", "Registro eliminado correctamente.")
+            id = entrada_id.get()
+            if id.isdigit():
+                id = int(id)
+                consulta = "DELETE FROM cabanyas WHERE id = %s"
+                valores = (id,)
+                cursor.execute(consulta, valores)
+                conexion.commit()
+                ventana_eliminar.destroy()
+                messagebox.showinfo("Éxito", "Registro eliminado correctamente.")
+            else:
+                messagebox.showerror("Error", "El ID debe ser un valor numérico.")
 
         boton_eliminar = tk.Button(ventana_eliminar, text="Eliminar", command=eliminar_registro)
         boton_eliminar.pack()
@@ -93,13 +102,17 @@ def ventana_eliminacion():
         entrada_id.pack()
 
         def eliminar_registro():
-            id = int(entrada_id.get())
-            consulta = "DELETE FROM tipo_usuario WHERE id = %s"
-            valores = (id,)
-            cursor.execute(consulta, valores)
-            conexion.commit()
-            ventana_eliminar.destroy()
-            tk.messagebox.showinfo("Éxito", "Registro eliminado correctamente.")
+            id = entrada_id.get()
+            if id.isdigit():
+                id = int(id)
+                consulta = "DELETE FROM tipo_usuario WHERE id = %s"
+                valores = (id,)
+                cursor.execute(consulta, valores)
+                conexion.commit()
+                ventana_eliminar.destroy()
+                messagebox.showinfo("Éxito", "Registro eliminado correctamente.")
+            else:
+                messagebox.showerror("Error", "El ID debe ser un valor numérico.")
 
         boton_eliminar = tk.Button(ventana_eliminar, text="Eliminar", command=eliminar_registro)
         boton_eliminar.pack()
@@ -117,13 +130,17 @@ def ventana_eliminacion():
         entrada_id.pack()
 
         def eliminar_registro():
-            id = int(entrada_id.get())
-            consulta = "DELETE FROM usuarios WHERE id = %s"
-            valores = (id,)
-            cursor.execute(consulta, valores)
-            conexion.commit()
-            ventana_eliminar.destroy()
-            tk.messagebox.showinfo("Éxito", "Registro eliminado correctamente.")
+            id = entrada_id.get()
+            if id.isdigit():
+                id = int(id)
+                consulta = "DELETE FROM usuarios WHERE id = %s"
+                valores = (id,)
+                cursor.execute(consulta, valores)
+                conexion.commit()
+                ventana_eliminar.destroy()
+                messagebox.showinfo("Éxito", "Registro eliminado correctamente.")
+            else:
+                messagebox.showerror("Error", "El ID debeser un valor numérico.")
 
         boton_eliminar = tk.Button(ventana_eliminar, text="Eliminar", command=eliminar_registro)
         boton_eliminar.pack()
@@ -141,13 +158,17 @@ def ventana_eliminacion():
         entrada_id.pack()
 
         def eliminar_registro():
-            id = int(entrada_id.get())
-            consulta = "DELETE FROM reservas WHERE id = %s"
-            valores = (id,)
-            cursor.execute(consulta, valores)
-            conexion.commit()
-            ventana_eliminar.destroy()
-            tk.messagebox.showinfo("Éxito", "Registro eliminado correctamente.")
+            id = entrada_id.get()
+            if id.isdigit():
+                id = int(id)
+                consulta = "DELETE FROM reservas WHERE id = %s"
+                valores = (id,)
+                cursor.execute(consulta, valores)
+                conexion.commit()
+                ventana_eliminar.destroy()
+                messagebox.showinfo("Éxito", "Registro eliminado correctamente.")
+            else:
+                messagebox.showerror("Error", "El ID debe ser un valor numérico.")
 
         boton_eliminar = tk.Button(ventana_eliminar, text="Eliminar", command=eliminar_registro)
         boton_eliminar.pack()
@@ -165,13 +186,17 @@ def ventana_eliminacion():
         entrada_id.pack()
 
         def eliminar_registro():
-            id = int(entrada_id.get())
-            consulta = "DELETE FROM metodo_pago WHERE id = %s"
-            valores = (id,)
-            cursor.execute(consulta, valores)
-            conexion.commit()
-            ventana_eliminar.destroy()
-            tk.messagebox.showinfo("Éxito", "Registro eliminado correctamente.")
+            id = entrada_id.get()
+            if id.isdigit():
+                id = int(id)
+                consulta = "DELETE FROM metodo_pago WHERE id = %s"
+                valores = (id,)
+                cursor.execute(consulta, valores)
+                conexion.commit()
+                ventana_eliminar.destroy()
+                messagebox.showinfo("Éxito", "Registro eliminado correctamente.")
+            else:
+                messagebox.showerror("Error", "El ID debe ser un valor numérico.")
 
         boton_eliminar = tk.Button(ventana_eliminar, text="Eliminar", command=eliminar_registro)
         boton_eliminar.pack()
@@ -189,13 +214,17 @@ def ventana_eliminacion():
         entrada_id.pack()
 
         def eliminar_registro():
-            id = int(entrada_id.get())
-            consulta = "DELETE FROM pagos WHERE id = %s"
-            valores = (id,)
-            cursor.execute(consulta, valores)
-            conexion.commit()
-            ventana_eliminar.destroy()
-            tk.messagebox.showinfo("Éxito", "Registro eliminado correctamente.")
+            id = entrada_id.get()
+            if id.isdigit():
+                id = int(id)
+                consulta = "DELETE FROM pagos WHERE id = %s"
+                valores = (id,)
+                cursor.execute(consulta, valores)
+                conexion.commit()
+                ventana_eliminar.destroy()
+                messagebox.showinfo("Éxito", "Registro eliminado correctamente.")
+            else:
+                messagebox.showerror("Error", "El ID debe ser un valor numérico.")
 
         boton_eliminar = tk.Button(ventana_eliminar, text="Eliminar", command=eliminar_registro)
         boton_eliminar.pack()
