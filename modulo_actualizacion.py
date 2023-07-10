@@ -1,5 +1,6 @@
 import tkinter as tk
 import conexion_bd
+import tkinter.messagebox as messagebox
 
 def ventana_actualizacion():
     # Conectar a la base de datos
@@ -32,6 +33,17 @@ def ventana_actualizacion():
         for resultado in resultados:
             texto_resultados.insert(tk.END, str(resultado) + "\n")
 
+    # Función para validar si un ID de registro existe en una tabla
+    def validar_id(id, tabla):
+        consulta = f"SELECT id FROM {tabla} WHERE id = %s"
+        valores = (id,)
+        cursor.execute(consulta, valores)
+        resultado = cursor.fetchone()
+        if resultado:
+            return True
+        else:
+            return False
+
     # Función para actualizar un registro en la tabla tipo_cabanya
     def actualizar_tipo_cabanya():
         ventana_actualizar = tk.Toplevel(ventana)
@@ -51,14 +63,28 @@ def ventana_actualizacion():
         entrada_nombre.pack()
 
         def guardar_tipo_cabanya():
+            # Obtener el nombre actual del registro
+            id_actual = int(entrada_id.get())
+            consulta_nombre_actual = "SELECT nombre FROM tipo_cabanya WHERE id = %s"
+            cursor.execute(consulta_nombre_actual, (id_actual,))
+            nombre_actual = cursor.fetchone()[0]
+
             id = int(entrada_id.get())
             nombre = entrada_nombre.get()
+
+            if not validar_id(id, "tipo_cabanya"):
+                messagebox.showerror("Error", "El ID de registro no existe.")
+                return
+
+            if nombre == "":
+                nombre = nombre_actual
+
             consulta = "UPDATE tipo_cabanya SET nombre = %s WHERE id = %s"
             valores = (nombre, id)
             cursor.execute(consulta, valores)
             conexion.commit()
             ventana_actualizar.destroy()
-            tk.messagebox.showinfo("Éxito", "Registro actualizado correctamente.")
+            messagebox.showinfo("Éxito", "Registro actualizado correctamente.")
 
         boton_guardar = tk.Button(ventana_actualizar, text="Guardar", command=guardar_tipo_cabanya)
         boton_guardar.pack()
@@ -181,19 +207,42 @@ def ventana_actualizacion():
         entrada_telefono.pack()
 
         def guardar_usuarios():
+            # Obtener los valores actuales del registro
+            id_actual = int(entrada_id.get())
+            consulta_actual = "SELECT tipo_id, rut, nombre, apellido, email, telefono FROM usuarios WHERE id = %s"
+            cursor.execute(consulta_actual, (id_actual,))
+            valores_actuales = cursor.fetchone()
+
             id = int(entrada_id.get())
-            tipo_id = int(entrada_tipo_id.get())
-            rut = int(entrada_rut.get())
+            tipo_id = int(entrada_tipo_id.get()) if entrada_tipo_id.get() != "" else valores_actuales[0]
+            rut = int(entrada_rut.get()) if entrada_rut.get() != "" else valores_actuales[1]
             nombre = entrada_nombre.get()
             apellido = entrada_apellido.get()
             email = entrada_email.get()
             telefono = entrada_telefono.get()
+
+            if not validar_id(id, "usuarios"):
+                messagebox.showerror("Error", "El ID de registro no existe.")
+                return
+
+            if nombre == "":
+                nombre = valores_actuales[2]
+
+            if apellido == "":
+                apellido = valores_actuales[3]
+
+            if email == "":
+                email = valores_actuales[4]
+
+            if telefono == "":
+                telefono = valores_actuales[5]
+
             consulta = "UPDATE usuarios SET tipo_id = %s, rut = %s, nombre = %s, apellido = %s, email = %s, telefono = %s WHERE id = %s"
             valores = (tipo_id, rut, nombre, apellido, email, telefono, id)
             cursor.execute(consulta, valores)
             conexion.commit()
             ventana_actualizar.destroy()
-            tk.messagebox.showinfo("Éxito", "Registro actualizado correctamente.")
+            messagebox.showinfo("Éxito", "Registro actualizado correctamente.")
 
         boton_guardar = tk.Button(ventana_actualizar, text="Guardar", command=guardar_usuarios)
         boton_guardar.pack()
