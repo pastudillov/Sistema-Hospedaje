@@ -6,6 +6,11 @@ def ventana_consulta():
     conexion = conexion_bd.conectar()
     cursor = conexion.cursor()
 
+    # Verificar la conexión a la base de datos
+    if conexion is None:
+        tk.messagebox.showerror("Error", "No se pudo conectar a la base de datos")
+        return
+
     # Crear la ventana de inserción
     ventana = tk.Toplevel()
     ventana.title("Consulta de Datos")
@@ -13,9 +18,12 @@ def ventana_consulta():
 
     # Función para ejecutar una consulta SQL
     def ejecutar_consulta(consulta):
-        cursor.execute(consulta)
-        resultados = cursor.fetchall()
-        return resultados
+        try:
+            cursor.execute(consulta)
+            resultados = cursor.fetchall()
+            return resultados
+        except Exception as e:
+            tk.messagebox.showerror("Error", f"No se pudo ejecutar la consulta: {str(e)}")
 
     # Función para mostrar los resultados de una consulta en una ventana emergente
     def mostrar_resultados(resultados):
