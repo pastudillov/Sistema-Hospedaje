@@ -284,11 +284,18 @@ def ventana_actualizacion():
         entrada_fecha_salida.pack()
 
         def guardar_reservas():
-            id = int(entrada_id.get())
-            cabanya_id = int(entrada_cabanya_id.get())
-            usuario_id = int(entrada_usuario_id.get())
-            fecha_entrada = entrada_fecha_entrada.get()
-            fecha_salida = entrada_fecha_salida.get()
+            try:
+                id = int(entrada_id.get())
+            except: 
+                messagebox.showwarning(message="Debe llenar el campo ID")
+            consulta_actual = "SELECT cabanya_id, usuario_id, fecha_entrada, fecha_salida FROM reservas WHERE id = %s"
+            cursor.execute(consulta_actual, (id,))
+            valores_actuales = cursor.fetchone()
+
+            cabanya_id = int(entrada_cabanya_id.get()) if entrada_cabanya_id.get() != "" else valores_actuales[0]
+            usuario_id = int(entrada_usuario_id.get()) if entrada_usuario_id.get() != "" else valores_actuales[1]
+            fecha_entrada = entrada_fecha_entrada.get() if entrada_fecha_entrada.get() != "" else valores_actuales[2]
+            fecha_salida = entrada_fecha_salida.get() if entrada_fecha_salida.get() != "" else valores_actuales[3]
             consulta = "UPDATE reservas SET cabanya_id = %s, usuario_id = %s, fecha_entrada = %s, fecha_salida = %s WHERE id = %s"
             valores = (cabanya_id, usuario_id, fecha_entrada, fecha_salida, id)
             cursor.execute(consulta, valores)
